@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BankingApp {
@@ -11,35 +12,40 @@ public class BankingApp {
         System.out.println("--- Welcome to the Backend Bank ---");
 
         while (running) {
-            System.out.println("\nSelect an operation:");
-            System.out.println("1. View Balance");
-            System.out.println("2. Deposit");
-            System.out.println("3. Withdraw");
-            System.out.println("4. Exit");
-            System.out.print("Choice: ");
+            try {
+                System.out.println("\nSelect an operation:");
+                System.out.println("1. View Balance");
+                System.out.println("2. Deposit");
+                System.out.println("3. Withdraw");
+                System.out.println("4. Exit");
+                System.out.print("Choice: ");
 
-            int choice = scanner.nextInt();
+                int choice = scanner.nextInt();
 
-            switch (choice) {
-                case 1:
-                    System.out.println("Current Balance: $" + myAccount.getBalance());
-                    break;
-                case 2:
-                    System.out.print("Enter amount to deposit: ");
-                    double dAmount = scanner.nextDouble();
-                    myAccount.deposit(dAmount);
-                    break;
-                case 3:
-                    System.out.print("Enter amount to withdraw: ");
-                    double wAmount = scanner.nextDouble();
-                    myAccount.withdraw(wAmount);
-                    break;
-                case 4:
-                    running = false;
-                    System.out.println("Session ended. Have a great day!");
-                    break;
-                default:
-                    System.out.println("Error: Invalid choice.");
+                switch (choice) {
+                    case 1:
+                        System.out.println("Current Balance: $" + myAccount.getBalance());
+                        break;
+                    case 2:
+                        System.out.print("Enter amount to deposit: ");
+                        double dAmount = scanner.nextDouble();
+                        myAccount.deposit(dAmount);
+                        break;
+                    case 3:
+                        System.out.print("Enter amount to withdraw: ");
+                        double wAmount = scanner.nextDouble();
+                        myAccount.withdraw(wAmount);
+                        break;
+                    case 4:
+                        running = false;
+                        System.out.println("Session ended. Have a great day!");
+                        break;
+                    default:
+                        System.out.println("Error: Invalid choice.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Please enter a valid number.");
+                scanner.nextLine(); // CRITICAL: This clears the "bad" input from the scanner buffer
             }
         }
         scanner.close();
