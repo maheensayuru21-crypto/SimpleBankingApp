@@ -6,7 +6,8 @@ public class BankingApp {
         Scanner scanner = new Scanner(System.in);
         
         // Initializing one account to test with
-        Account myAccount = new Account("1001", "John Doe", 500.0);
+        double savedBalance = FileHandler.loadBalance();
+        Account myAccount = new Account("1001", "John Doe", savedBalance);
         boolean running = true;
 
         System.out.println("--- Welcome to the Backend Bank ---");
@@ -30,11 +31,13 @@ public class BankingApp {
                         System.out.print("Enter amount to deposit: ");
                         double dAmount = scanner.nextDouble();
                         myAccount.deposit(dAmount);
+                        FileHandler.saveBalance(myAccount.getBalance());
                         break;
                     case 3:
                         System.out.print("Enter amount to withdraw: ");
                         double wAmount = scanner.nextDouble();
                         myAccount.withdraw(wAmount);
+                        FileHandler.saveBalance(myAccount.getBalance());
                         break;
                     case 4:
                         running = false;
@@ -49,5 +52,6 @@ public class BankingApp {
             }
         }
         scanner.close();
+
     }
 }
