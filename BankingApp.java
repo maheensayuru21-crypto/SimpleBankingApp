@@ -1,57 +1,69 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.HashMap;
 
 public class BankingApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
-        // Initializing one account to test with
-        double savedBalance = FileHandler.loadBalance();
-        Account myAccount = new Account("1001", "John Doe", savedBalance);
-        boolean running = true;
+        // Load the "Database"
+        HashMap<String, Account> bankMap = FileHandler.loadAllAccounts();
 
         System.out.println("--- Welcome to the Backend Bank ---");
+        System.out.print("Enter Account Number to Login: ");
+        String accNum = scanner.next();
 
-        while (running) {
-            try {
-                System.out.println("\nSelect an operation:");
-                System.out.println("1. View Balance");
-                System.out.println("2. Deposit");
-                System.out.println("3. Withdraw");
-                System.out.println("4. Exit");
-                System.out.print("Choice: ");
+        // Check if account exists
+        if (bankMap.containsKey(accNum)) {
+            Account currentAccount = bankMap.get(accNum);
+            System.out.println("Login Successful! Welcome, " + currentAccount.getAccountHolder());
+            
+            boolean running = true;
 
-                int choice = scanner.nextInt();
+            while (running) {
+                try {
+                    System.out.println("\n--- " + currentAccount.getAccountHolder() + "'s Menu ---");
+                    System.out.println("1. View Balance");
+                    System.out.println("2. Deposit");
+                    System.out.println("3. Withdraw");
+                    System.out.println("4. Exit");
+                    System.out.print("Choice: ");
 
-                switch (choice) {
-                    case 1:
-                        System.out.println("Current Balance: $" + myAccount.getBalance());
-                        break;
-                    case 2:
-                        System.out.print("Enter amount to deposit: ");
-                        double dAmount = scanner.nextDouble();
-                        myAccount.deposit(dAmount);
-                        FileHandler.saveBalance(myAccount.getBalance());
-                        break;
-                    case 3:
-                        System.out.print("Enter amount to withdraw: ");
-                        double wAmount = scanner.nextDouble();
-                        myAccount.withdraw(wAmount);
-                        FileHandler.saveBalance(myAccount.getBalance());
-                        break;
-                    case 4:
-                        running = false;
-                        System.out.println("Session ended. Have a great day!");
-                        break;
-                    default:
-                        System.out.println("Error: Invalid choice.");
+                    int choice = scanner.nextInt();
+
+                    switch (choice) {
+                        case 1:
+                            System.out.printf("Current Balance: $%.2f\n", currentAccount.getBalance());
+                            break;
+                        case 2:
+                            System.out.print("Enter deposit amount: ");
+                            double dAmount = scanner.nextDouble();
+                            currentAccount.deposit(dAmount);
+                            FileHandler.saveAllAccounts(bankMap);
+                            break;
+                        case 3:
+                            System.out.print("Enter withdrawal amount: ");
+                            double wAmount = scanner.nextDouble();
+                            if (currentAccount.withdraw(wAmount)) {
+                                FileHandler.saveAllAccounts(bankMap);
+                            }
+                            break;
+                        case 4:
+                            running = false;
+                            System.out.println("Logged out. Goodbye!");
+                            break;
+                        default:
+                            System.out.println("Invalid option.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Error: Please enter a valid number.");
+                    scanner.nextLine(); // Clear the bad input
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Error: Please enter a valid number.");
-                scanner.nextLine(); // CRITICAL: This clears the "bad" input from the scanner buffer
             }
+        } else {
+            System.out.println("Access Denied: Account number not found.");
         }
+        
         scanner.close();
-
     }
 }
