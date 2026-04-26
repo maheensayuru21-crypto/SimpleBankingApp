@@ -1,4 +1,4 @@
-# Simple Banking System (v2.0 - SQL Integrated)
+# Nexus Banking System (v2.0 - SQL Integrated)
 
 A professional-grade console application built to demonstrate **Relational Database Management (RDBMS)**, **Dependency Management**, and **Clean Backend Architecture**.
 
