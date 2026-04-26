@@ -7,7 +7,7 @@ public class BankingApp {
         Scanner scanner = new Scanner(System.in);
         
         // 1. Load all existing accounts from the file
-        HashMap<String, Account> bankMap = FileHandler.loadAllAccounts();
+        HashMap<String, Account> bankMap = DatabaseHandler.loadAllAccounts();
         boolean appRunning = true;
 
         while (appRunning) {
@@ -48,8 +48,8 @@ public class BankingApp {
                         Account newAcc = new Account(newAccNum, name, initialDep);
                         bankMap.put(newAccNum, newAcc);
                         
-                        // Save the new user immediately to accounts.txt
-                        FileHandler.saveAllAccounts(bankMap);
+                        // Save the new user
+                        DatabaseHandler.saveNewAccount(newAcc);
 
                         System.out.println("\nSUCCESS! Account created.");
                         System.out.println("Your Account Number is: " + newAccNum);
@@ -94,17 +94,23 @@ public class BankingApp {
                     case 1:
                         System.out.printf("Current Balance: $%.2f\n", currentAccount.getBalance());
                         break;
+                    // Case 2: Deposit
                     case 2:
                         System.out.print("Enter deposit amount: ");
-                        double dAmt = scanner.nextDouble();
-                        currentAccount.deposit(dAmt);
-                        FileHandler.saveAllAccounts(bankMap);
+                        double dAmount = scanner.nextDouble(); // Ensure this variable name matches
+                        currentAccount.deposit(dAmount);
+                        
+                        // NEW SQL LOGIC: Update only the specific account in the DB
+                        DatabaseHandler.updateBalance(currentAccount.getAccountNumber(), currentAccount.getBalance());
                         break;
+
+                    // Case 3: Withdraw
                     case 3:
                         System.out.print("Enter withdrawal amount: ");
-                        double wAmt = scanner.nextDouble();
-                        if (currentAccount.withdraw(wAmt)) {
-                            FileHandler.saveAllAccounts(bankMap);
+                        double wAmount = scanner.nextDouble();
+                        if (currentAccount.withdraw(wAmount)) {
+                            // NEW SQL LOGIC
+                            DatabaseHandler.updateBalance(currentAccount.getAccountNumber(), currentAccount.getBalance());
                         }
                         break;
                     case 4:
