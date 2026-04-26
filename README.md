@@ -1,62 +1,30 @@
-# Simple Banking Application (Java)
+# Simple Banking System (v2.0 - SQL Integrated)
 
-A console-based banking system built with core Java, focusing on **Object-Oriented Programming (OOP)** and **Data Persistence**.
+A professional-grade console application built to demonstrate **Relational Database Management (RDBMS)**, **Dependency Management**, and **Clean Backend Architecture**.
 
-## 🚀 Features
-- **User Registration:** Dynamically generate unique 4-digit account numbers.
-- **Secure Login:** Session-based access to specific account data.
-- **Stateful Transactions:** Deposit and withdraw funds with real-time balance updates.
-- **Data Persistence:** All account information is saved to a local flat-file database (`accounts.txt`).
-- **Error Handling:** Robust validation for numeric inputs and insufficient funds.
+## 🚀 Recent Upgrades
+- **Database Integration:** Migrated from `.txt` files to a **MySQL** database for reliable data persistence.
+- **Maven Migration:** Project now uses **Maven** (`pom.xml`) for automated dependency and build management.
+- **Java 21 support:** Optimized for the latest Long-Term Support (LTS) Java version.
+- **Prepared Statements:** Implemented SQL logic to prevent SQL Injection attacks.
 
 ## 🛠️ Technical Stack
-- **Language:** Java 17+
-- **Data Structure:** `HashMap` for O(1) account lookups.
-- **Storage:** File I/O (CSV-style parsing).
-- **Version Control:** Git/GitHub with Feature-Branch workflow.
+- **Language:** Java 21
+- **Database:** MySQL 8.x
+- **Connector:** MySQL Connector/J (JDBC)
+- **Build Tool:** Maven
+- **Architecture:** Controller-DAO Pattern
 
-## 📖 What I Learned (Backend Focus)
-- **Separation of Concerns:** Split logic into Model (`Account`), Controller (`BankingApp`), and Data Access (`FileHandler`).
-- **Encapsulation:** Used private fields and public getters to protect sensitive financial data.
-- **Defensive Programming:** Implemented `try-catch` blocks to handle malformed user input.
+## 📖 Key Learnings
+- **Data Integrity:** Ensuring transactions (Deposit/Withdraw) are reflected accurately in a database.
+- **Environment Parity:** Aligning local JDK versions with Maven compiler settings.
+- **Standard Directory Layout:** Organizing code into `src/main/java` as per industry standards.
 
+## 🖥️ Database Schema
+```sql
+CREATE TABLE accounts (
+    account_number VARCHAR(10) PRIMARY KEY,
+    account_holder VARCHAR(100) NOT NULL,
+    balance DECIMAL(15, 2) DEFAULT 0.0
+);
 
-
-## 🖥️ Project Demo
-
-Below is an example of a typical user session, from registration to performing a transaction.
-
-### 1. Registration
-===== MAIN MENU =====
-1. Login to Existing Account
-2. Register New Account
-3. Exit
-Choice: 2
-
-Enter Account Holder Name: Jon Johns
-Enter Initial Deposit: 1000
-
-SUCCESS! Account created.
-Your Account Number is: 5482
-
-
-### 2. Login and transaction
-===== MAIN MENU =====
-1. Login to Existing Account
-2. Register New Account
-3. Exit
-Choice: 1
-
-Enter Account Number: 5482
-Login Successful! Welcome, Jon Johns!
-
---- Dashboard (5482) ---
-1. View Balance
-2. Deposit
-3. Withdraw
-4. Logout
-Choice: 3
-
-Enter withdrawal amount: 250
-Withdrawn: $250.0
-Transaction saved to ledger.
