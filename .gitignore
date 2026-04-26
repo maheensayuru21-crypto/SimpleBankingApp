@@ -23,6 +23,7 @@
 hs_err_pid*
 replay_pid*
 
-
-balance.txt
-accounts.txt
+target/
+.vscode/
+*.log
+.DS_Store
