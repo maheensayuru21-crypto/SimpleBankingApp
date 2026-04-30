@@ -1,7 +1,7 @@
 import java.sql.*;
 import java.util.HashMap;
 
-public class DatabaseHandler {
+public class DatabaseManager {
     // Database credentials
     private static final String URL = "jdbc:mysql://localhost:3306/bank_db";
     private static final String USER = "root"; // Your SQL username

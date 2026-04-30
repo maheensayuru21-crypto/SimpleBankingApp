@@ -7,7 +7,7 @@ public class BankingApp {
         Scanner scanner = new Scanner(System.in);
         
         // 1. Load all existing accounts from the file
-        HashMap<String, Account> bankMap = DatabaseHandler.loadAllAccounts();
+        HashMap<String, Account> bankMap = DatabaseManager.loadAllAccounts();
         boolean appRunning = true;
 
         while (appRunning) {
@@ -49,7 +49,7 @@ public class BankingApp {
                         bankMap.put(newAccNum, newAcc);
                         
                         // Save the new user
-                        DatabaseHandler.saveNewAccount(newAcc);
+                        DatabaseManager.saveNewAccount(newAcc);
 
                         System.out.println("\nSUCCESS! Account created.");
                         System.out.println("Your Account Number is: " + newAccNum);
@@ -101,7 +101,7 @@ public class BankingApp {
                         currentAccount.deposit(dAmount);
                         
                         // NEW SQL LOGIC: Update only the specific account in the DB
-                        DatabaseHandler.updateBalance(currentAccount.getAccountNumber(), currentAccount.getBalance());
+                        DatabaseManager.updateBalance(currentAccount.getAccountNumber(), currentAccount.getBalance());
                         break;
 
                     // Case 3: Withdraw
@@ -110,7 +110,7 @@ public class BankingApp {
                         double wAmount = scanner.nextDouble();
                         if (currentAccount.withdraw(wAmount)) {
                             // NEW SQL LOGIC
-                            DatabaseHandler.updateBalance(currentAccount.getAccountNumber(), currentAccount.getBalance());
+                            DatabaseManager.updateBalance(currentAccount.getAccountNumber(), currentAccount.getBalance());
                         }
                         break;
                     case 4:
