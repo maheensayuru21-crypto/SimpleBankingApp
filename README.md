@@ -47,10 +47,10 @@ CREATE TABLE offline_messages (
 ## 🔗 The Nexus Ecosystem
 This banking system is no longer just a standalone application—it acts as the foundational data layer for a microservice architecture. 
 
-It is integrated with the **[Nexus Chat Server](https://github.com/M4H33N/Nexus-Chat-Server)**, allowing users to securely query their database balances (`/balance`) and execute live, multi-threaded SQL transactions (`/transfer`) directly through an encrypted JavaFX chat interface.
+It is integrated with the **[Nexus Chat Server](https://github.com/M4H33N-dev/Nexus-Chat-Server)**, allowing users to securely query their database balances (`/balance`) and execute live, multi-threaded SQL transactions (`/transfer`) directly through an encrypted JavaFX chat interface.
 
 ## ⚙️ Setup & Installation
-1. Clone the repository: `git clone https://github.com/M4H33N/Nexus-Banking-System.git`
+1. Clone the repository: `git clone https://github.com/M4H33N-dev/Nexus-Banking-System.git`
 2. Create the MySQL database: `CREATE DATABASE bank_db;`
 3. Execute the schema provided above to build the tables.
 4. Update the `URL`, `USER`, and `PASSWORD` in `DatabaseManager.java`.
